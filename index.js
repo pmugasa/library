@@ -1,7 +1,7 @@
 //array storing the books created
 let myLibrary = [];
-
-//book constructor
+const div = document.getElementById("div");
+// make a book constructor
 function Book(title, author, pages, state) {
   this.title = title;
   this.author = author;
@@ -11,32 +11,51 @@ function Book(title, author, pages, state) {
     return `${title}, by ${author}, has ${pages} pages.  ${state}`;
   };
 }
-
-//function that adds books to the library
-
-function addBookToLibrary() {
-  // getting book information
+function getUserInputs() {
+  // get the values from the user
   const title = document.getElementById("title").value;
   const author = document.getElementById("author").value;
   const pages = document.getElementById("pages").value;
   const state = document.getElementById("state").value;
 
-  //creating a book
-  const book = new Book(title, author, pages, state);
-  myLibrary.push(book);
+  return new Book(title, author, pages, state);
+}
+// use the values to make the book
+function addToLibrary() {
+  const newBk = getUserInputs();
+  myLibrary.push(newBk);
+}
+// store the book in an array
+// when a button is clicked and the form is submited loop through the array and show the books
+const form = document.getElementById("my-form");
+form.addEventListener("submit", handleSubmit);
 
-  myLibrary.forEach((book) => {
-    const para = document.createElement("p");
-    para.textContent = book.title;
-    const div = document.getElementById("div");
-    div.appendChild(para);
-  });
+function handleSubmit(e) {
+  e.preventDefault();
+  addToLibrary();
+  displayBook();
+  form.reset();
 }
 
-//handling form on submit
-const btn = document
-  .getElementById("btn")
-  .addEventListener("click", (event) => {
-    event.preventDefault();
-    addBookToLibrary();
-  });
+// display books
+function displayBook() {
+  if (myLibrary.length > 0) {
+    myLibrary.forEach((book) => {
+      const para = document.createElement("p");
+      const para2 = document.createElement("p");
+      const para3 = document.createElement("p");
+      para.textContent = "TITLE:" + " " + book.title;
+      para2.textContent = "AUTHOR:" + " " + book.author;
+      para3.textContent = "NUMBER OF PAGES:" + " " + book.pages;
+
+      div.appendChild(para);
+      div.appendChild(para2);
+      div.appendChild(para3);
+    });
+  }
+}
+
+//if the array has a book when a user clicks this remove the divs and readd them again
+//check if the array has any book
+//if does remove paragraphs
+//if it doesn't go ahead and create them
