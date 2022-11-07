@@ -1,6 +1,7 @@
 //array storing the books created
 let myLibrary = [];
-const div = document.getElementById("div");
+
+let div = document.getElementById("div");
 // make a book constructor
 function Book(title, author, pages, state) {
   this.title = title;
@@ -22,8 +23,10 @@ function getUserInputs() {
 }
 // use the values to make the book
 function addToLibrary() {
-  const newBk = getUserInputs();
-  myLibrary.push(newBk);
+  const newbook = getUserInputs();
+  if (!myLibrary.includes(newbook)) {
+    myLibrary.push(newbook);
+  }
 }
 // store the book in an array
 // when a button is clicked and the form is submited loop through the array and show the books
@@ -33,25 +36,32 @@ form.addEventListener("submit", handleSubmit);
 function handleSubmit(e) {
   e.preventDefault();
   addToLibrary();
+
   displayBook();
   form.reset();
 }
 
 // display books
 function displayBook() {
-  if (myLibrary.length > 0) {
-    myLibrary.forEach((book) => {
-      const para = document.createElement("p");
-      const para2 = document.createElement("p");
-      const para3 = document.createElement("p");
-      para.textContent = "TITLE:" + " " + book.title;
-      para2.textContent = "AUTHOR:" + " " + book.author;
-      para3.textContent = "NUMBER OF PAGES:" + " " + book.pages;
+  removeCreatedElements(document.getElementsByTagName("p"));
+  myLibrary.forEach((book) => {
+    const para = document.createElement("p");
+    const para2 = document.createElement("p");
+    const para3 = document.createElement("p");
+    para.textContent = "TITLE:" + " " + book.title;
+    para2.textContent = "AUTHOR:" + " " + book.author;
+    para3.textContent = "NUMBER OF PAGES:" + " " + book.pages;
 
-      div.appendChild(para);
-      div.appendChild(para2);
-      div.appendChild(para3);
-    });
+    div.appendChild(para);
+    div.appendChild(para2);
+    div.appendChild(para3);
+    console.log(book);
+  });
+}
+
+function removeCreatedElements(elements) {
+  for (let index = 0; index < elements.length; index++) {
+    elements[index].parentNode.removeChild(elements[index]);
   }
 }
 
