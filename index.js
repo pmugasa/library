@@ -3,14 +3,16 @@ let myLibrary = [];
 
 let div = document.getElementById("div");
 // make a book constructor
-function Book(title, author, pages, state) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.state = state;
-  this.info = function () {
-    return `${title}, by ${author}, has ${pages} pages.  ${state}`;
-  };
+class Book {
+  constructor(title, author, pages, state) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.state = state;
+    this.info = function () {
+      return `${title}, by ${author}, has ${pages} pages.  ${state}`;
+    };
+  }
 }
 function getUserInputs() {
   // get the values from the user
